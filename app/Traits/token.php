@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 trait Token{
 
-    public function getAccesstoken($user, $service)
+    public function setAccesstoken($user, $service)
     {
         $response = Http::withHeaders([
             'Accept' => 'application/json'

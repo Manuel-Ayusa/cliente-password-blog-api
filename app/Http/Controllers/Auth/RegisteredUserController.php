@@ -56,7 +56,7 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
         ]);
 
-        $this->getAccesstoken($user, $service);
+        $this->setAccesstoken($user, $service);
 
         event(new Registered($user));
 

@@ -55,7 +55,7 @@ class AuthenticatedSessionController extends Controller
         ], $service['data']); //busca el usuario con ese email(en la bd del cliente) y si existe lo actualiza si no, lo crea
 
         if (!$user->accessToken) { //si el usuario no tiene un access token se le asigna uno
-            $this->getAccesstoken($user, $service);
+            $this->setAccesstoken($user, $service);
         }
 
         Auth::login($user, $request->remember);
