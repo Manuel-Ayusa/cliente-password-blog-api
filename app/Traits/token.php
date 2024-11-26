@@ -15,7 +15,8 @@ trait Token{
             'client_id' => config('services.codersfree.client_id'),
             'client_secret' => config('services.codersfree.client_secret'),
             'username' => request()->email,
-            'password' => request()->password
+            'password' => request()->password,
+            'scope' => '*'
         ]);
 
         $access_token = $response->json();
