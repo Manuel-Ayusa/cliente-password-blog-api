@@ -37,7 +37,8 @@ return [
 
     'codersfree' => [
         'client_id' => env('CODERSFREE_CLIENT_ID'),
-        'client_secret' => env('CODERSFREE_CLIENT_SECRET') 
+        'client_secret' => env('CODERSFREE_CLIENT_SECRET'),
+        'access_token_read_post' => env('CODERSFREE_ACCESS_TOKEN_READ_POST') 
     ]
 
 ];

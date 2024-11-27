@@ -17,5 +17,13 @@ export default {
         },
     },
 
+    safelist: [
+        'bg-pink-600',
+        'bg-blue-600',
+        'bg-indigo-600',
+        'bg-purple-600',
+        'bg-yellow-600'
+    ],
+
     plugins: [forms],
 };
