@@ -6,18 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Http;
 
-use Symfony\Component\Console\Input\Input;
-use Illuminate\Pagination\Paginator;
-
 class PostController extends Controller
 {
-    
-
-    // public function __construct()
-    // {
-    //     $this->resolveAuthorization(); //resuelve si el access_token expiro, si es asi se asigna uno nuevo usando el refresh_token
-    // }
-
+    //
     public function index()
     {
         $response = Http::withHeaders([
@@ -30,6 +21,10 @@ class PostController extends Controller
         $perPage = 8;
         $page = request()->input('page');
 
+        if ($page == null) {
+            $page = 1; 
+        }
+
         $items = array_slice($response->data, $perPage * ($page - 1), $perPage);;
 
         $posts = new LengthAwarePaginator($items, count($response->data), $perPage, $page);
@@ -39,8 +34,11 @@ class PostController extends Controller
         return view('posts.index', compact('posts'));
     }
 
+    //
     public function store()
     {
+        $this->resolveAuthorization(); //resuelve si el access_token expiro, si es asi se asigna uno nuevo usando el refresh_token
+
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . auth()->user()->accessToken->access_token
