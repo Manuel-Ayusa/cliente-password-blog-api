@@ -55,4 +55,24 @@ class PostController extends Controller
         return $response->json();
     }
 
+    //  
+    public function show($post){
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . config('services.codersfree.access_token_read_post')
+        ])->get('http://api.codersfree.test/v1/posts/' . $post . '?included=images,category');
+
+        $post = json_decode($response)->data;
+
+        $category_id = $post->category_id;
+
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . config('services.codersfree.access_token_read_post')
+        ])->get('http://api.codersfree.test/v1/posts?filter[category_id]=' . $category_id . '&&filter[status]=2&&sort=-id&&perPage=4&&included=images');
+
+        $similares = json_decode($response)->data;
+
+        return view('posts.show', compact(['post', 'similares']));
+    }
 }
