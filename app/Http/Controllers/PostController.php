@@ -73,4 +73,31 @@ class PostController extends Controller
 
         return view('posts.show', compact(['post', 'similares']));
     }
+
+    //
+    public function category($category){
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . config('services.codersfree.access_token_read_post')
+        ])->get('http://api.codersfree.test/v1/categories/' . $category . '?included=posts.images,posts.tags');
+
+        $category = json_decode($response)->data;
+
+        $posts = collect($category->posts)->where('status', 'PUBLICADO');
+
+        $perPage = 6;
+        $page = request()->input('page');
+
+        if ($page == null) {
+            $page = 1; 
+        }
+
+        $items = array_slice($posts->toArray(), $perPage * ($page - 1), $perPage);;
+
+        $posts = new LengthAwarePaginator($items, count($posts), $perPage, $page);
+        
+        $posts->setPath($category->id . '/');
+
+        return view('posts.category', compact(['category', 'posts']));
+    }
 }
