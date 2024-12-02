@@ -88,13 +88,16 @@ class PostController extends Controller
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
-        ])->get('http://api.codersfree.test/v1/tags/' . $tag . '?included=posts.images');
+        ])->get('http://api.codersfree.test/v1/tags/' . $tag . '?included=posts.images,posts.tags');
 
         $response = json_decode($response);
 
-        $posts = collect($response->data->posts)->where('status', 2);
-        $tag = $response->data->name;
+        $posts = collect($response->data->posts)->where('status', 'PUBLICADO')->sortByDesc('id');
+        $tag = $response->data;
 
-        return $tag;
+        $posts = $this->paginate($posts, 4);
+
+        //return $posts;
+        return view('posts.tag', compact(['posts', 'tag']));
     }
 }
