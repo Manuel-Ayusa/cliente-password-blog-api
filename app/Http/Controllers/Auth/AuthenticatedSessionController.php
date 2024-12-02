@@ -60,7 +60,7 @@ class AuthenticatedSessionController extends Controller
 
         Auth::login($user, $request->remember);
 
-        return redirect()->intended('/dashboard');
+        return redirect()->intended('/');
 
         //return $user;
         // $request->authenticate();
