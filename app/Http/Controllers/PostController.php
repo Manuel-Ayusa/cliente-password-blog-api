@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Http;
+use App\Traits\Paginate;
 
 class PostController extends Controller
 {
+    use Paginate;
     //
     public function index()
     {
@@ -16,20 +17,9 @@ class PostController extends Controller
             'Authorization' => 'Bearer ' . config('services.codersfree.access_token_read_post')
         ])->get('http://api.codersfree.test/v1/posts?filter[status]=2&&included=images,tags&&sort=-id'); 
 
-        $response = json_decode($response);
-        
-        $perPage = 8;
-        $page = request()->input('page');
-
-        if ($page == null) {
-            $page = 1; 
-        }
-
-        $items = array_slice($response->data, $perPage * ($page - 1), $perPage);;
-
-        $posts = new LengthAwarePaginator($items, count($response->data), $perPage, $page);
-        
-        $posts->setPath('/');
+        $posts = json_decode($response)->data;
+            
+        $posts = $this->paginate($posts, 8);
 
         return view('posts.index', compact('posts'));
     }
@@ -54,7 +44,8 @@ class PostController extends Controller
     }
 
     //  
-    public function show($post){
+    public function show(int $post)
+    {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . config('services.codersfree.access_token_read_post')
@@ -66,7 +57,7 @@ class PostController extends Controller
 
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . config('services.codersfree.access_token_read_post')
+            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
         ])->get('http://api.codersfree.test/v1/posts?filter[category_id]=' . $category_id . '&&filter[status]=2&&sort=-id&&perPage=4&&included=images');
 
         $similares = json_decode($response)->data;
@@ -75,29 +66,35 @@ class PostController extends Controller
     }
 
     //
-    public function category($category){
+    public function category(int $category)
+    {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . config('services.codersfree.access_token_read_post')
+            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
         ])->get('http://api.codersfree.test/v1/categories/' . $category . '?included=posts.images,posts.tags');
 
         $category = json_decode($response)->data;
 
         $posts = collect($category->posts)->where('status', 'PUBLICADO');
 
-        $perPage = 6;
-        $page = request()->input('page');
-
-        if ($page == null) {
-            $page = 1; 
-        }
-
-        $items = array_slice($posts->toArray(), $perPage * ($page - 1), $perPage);;
-
-        $posts = new LengthAwarePaginator($items, count($posts), $perPage, $page);
-        
-        $posts->setPath($category->id . '/');
+        $posts = $this->paginate($posts, 8);
 
         return view('posts.category', compact(['category', 'posts']));
+    }
+
+    //
+    public function tag(int $tag)
+    {
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
+        ])->get('http://api.codersfree.test/v1/tags/' . $tag . '?included=posts.images');
+
+        $response = json_decode($response);
+
+        $posts = collect($response->data->posts)->where('status', 2);
+        $tag = $response->data->name;
+
+        return $tag;
     }
 }
