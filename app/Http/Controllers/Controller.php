@@ -15,9 +15,9 @@ abstract class Controller
             ])->post('http://api.codersfree.test/oauth/token', [
                 'grant_type' => 'refresh_token',
                 'refresh_token' => auth()->user()->accessToken->refresh_token,
-                'client_id' => config('services.codersfree.client_id'),
-                'client_secret' => config('services.codersfree.client_secret'),
-                'scope' => 'create-post read-post update-post delete-post'
+                'client_id' => config('services.blog-api.client_id'),
+                'client_secret' => config('services.blog-api.client_secret'),
+                'scope' => 'create-post read-post update-post delete-post create-category read-category update-category delete-category'
             ]);
     
             $access_token = $response->json();

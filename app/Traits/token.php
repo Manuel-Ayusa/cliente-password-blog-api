@@ -12,8 +12,8 @@ trait Token{
             'Accept' => 'application/json'
         ])->post('http://api.codersfree.test/oauth/token', [
             'grant_type' => 'password',
-            'client_id' => config('services.codersfree.client_id'),
-            'client_secret' => config('services.codersfree.client_secret'),
+            'client_id' => config('services.blog-api.client_id'),
+            'client_secret' => config('services.blog-api.client_secret'),
             'username' => request()->email,
             'password' => request()->password,
             'scope' => '*'
