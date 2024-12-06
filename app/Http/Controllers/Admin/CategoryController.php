@@ -65,7 +65,9 @@ class CategoryController extends Controller
             'Authorization' => 'Bearer ' . auth()->user()->accessToken->access_token
         ])->post('http://api.codersfree.test/v1/categories', $request);
 
-        return redirect()->route('admin.categories.index');
+        $category = json_decode($response)->data;
+
+        return redirect()->route('admin.categories.edit', $category->id)->with('info', 'La categoria se creo con exito.');
     }
 
     /**
@@ -81,6 +83,13 @@ class CategoryController extends Controller
      */
     public function edit(int $category)
     {
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . auth()->user()->accessToken->access_token
+        ])->get('http://api.codersfree.test/v1/categories/' . $category);
+
+        $category = json_decode($response)->data;
+
         return view('admin.categories.edit', compact('category'));
     }
 
@@ -89,7 +98,32 @@ class CategoryController extends Controller
      */
     public function update(Request $request, int $category)
     {
-        //
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' .  config('services.codersfree.access_token_read_post')
+        ])->get('http://api.codersfree.test/v1/categories');
+
+        $categories = json_decode($response)->data;
+
+        $slugs = collect($categories)->where('id', '!=', $category)->pluck('slug'); //recupera todos los slugs menos el de la categoria a actualizar
+
+        $slug = Str::slug($request->name, '-');
+
+        $request['slug'] = $slug; 
+
+        $request->validate([
+            'name' => 'required|max:250',
+            'slug' => Rule::notIn($slugs)
+        ]);
+
+        $this->resolveAuthorization();
+
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . auth()->user()->accessToken->access_token
+        ])->put('http://api.codersfree.test/v1/categories/' . $category, $request);
+
+        return redirect()->route('admin.categories.edit', $category)->with('info', 'La categoria se actualizó con exito.');
     }
 
     /**
@@ -97,6 +131,11 @@ class CategoryController extends Controller
      */
     public function destroy(int $category)
     {
-        //
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . auth()->user()->accessToken->access_token
+        ])->delete('http://api.codersfree.test/v1/categories/' . $category);
+
+        return redirect()->route('admin.categories.index', $category)->with('info', 'La categoría se eliminó con exito.');
     }
 }
