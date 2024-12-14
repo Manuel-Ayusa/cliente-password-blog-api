@@ -6,9 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Rule;
-
-use App\Models\User;
-
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
