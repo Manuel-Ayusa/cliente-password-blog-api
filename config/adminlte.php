@@ -332,6 +332,11 @@ return [
             'icon' => 'fa-brands fa-fw fa-buffer',
         ],
         [
+            'text' => 'Etiquetas',
+            'route' => 'admin.tags.index',
+            'icon' => 'fa-solid fa-fw fa-tag',
+        ],
+        [
             'text' => 'change_password',
             'url' => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
