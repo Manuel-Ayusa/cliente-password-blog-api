@@ -15,10 +15,11 @@ class PostController extends Controller
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . config('services.codersfree.access_token_read_post')
-        ])->get('http://api.codersfree.test/v1/posts?filter[status]=2&&included=images,tags&&sort=-id'); 
+        ])->get('http://api.codersfree.test/v1/posts?filter[status]=2&&included=image,tags&&sort=-id'); 
 
+        
         $posts = json_decode($response)->data;
-            
+        
         $posts = $this->paginate($posts, 8);
 
         return view('posts.index', compact('posts'));
@@ -49,7 +50,7 @@ class PostController extends Controller
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . config('services.codersfree.access_token_read_post')
-        ])->get('http://api.codersfree.test/v1/posts/' . $post . '?included=images,category');
+        ])->get('http://api.codersfree.test/v1/posts/' . $post . '?included=image,category');
 
         $post = json_decode($response)->data;
 
@@ -58,7 +59,7 @@ class PostController extends Controller
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
-        ])->get('http://api.codersfree.test/v1/posts?filter[category_id]=' . $category_id . '&&filter[status]=2&&sort=-id&&perPage=4&&included=images');
+        ])->get('http://api.codersfree.test/v1/posts?filter[category_id]=' . $category_id . '&&filter[status]=2&&sort=-id&&perPage=4&&included=image');
 
         $similares = json_decode($response)->data;
 
@@ -71,11 +72,11 @@ class PostController extends Controller
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
-        ])->get('http://api.codersfree.test/v1/categories/' . $category . '?included=posts.images,posts.tags');
+        ])->get('http://api.codersfree.test/v1/categories/' . $category . '?included=posts.image,posts.tags');
 
         $category = json_decode($response)->data;
 
-        $posts = collect($category->posts)->where('status', 'PUBLICADO');
+        $posts = collect($category->posts)->where('status', 'PUBLICADO')->sortByDesc('id');
 
         $posts = $this->paginate($posts, 8);
 
@@ -88,7 +89,7 @@ class PostController extends Controller
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
-        ])->get('http://api.codersfree.test/v1/tags/' . $tag . '?included=posts.images,posts.tags');
+        ])->get('http://api.codersfree.test/v1/tags/' . $tag . '?included=posts.image,posts.tags');
 
         $response = json_decode($response);
 
