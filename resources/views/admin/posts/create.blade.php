@@ -9,12 +9,13 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <form action="{{route('admin.posts.store')}}" method="POST">
+            <form action="{{route('admin.posts.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
                     <input type="text" id="nombre" name="name" value="{{old('name')}}" class="form-control" placeholder="Ingrese el nombre del post">
+
                     @error('name')
                     <span class="text-danger">{{'*' . $message }}</span>
                     @enderror
@@ -30,6 +31,10 @@
                             <option value="{{$category->id}}">{{$category->name}}</option>
                         @endforeach
                     </select>
+
+                    @error('category_id')
+                    <span class="text-danger">{{'*' . $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="form-group">
@@ -37,11 +42,14 @@
 
                     <fieldset>
                         @foreach ($tags as $tag)
-                            <input type="checkbox" name="tags" id="{{$tag->name}}" value="{{$tag->name}}">
+                            <input type="checkbox" name="tags[]" id="{{$tag->name}}" value="{{$tag->id}}">
                             <label class="mr-3" for="{{$tag->name}}">{{$tag->name}}</label>
                         @endforeach
-                       
                     </fieldset>
+
+                    @error('tags')
+                    <span class="text-danger">{{'*' . $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="form-group">
@@ -53,16 +61,37 @@
                         <input type="radio" name="status" id="publi" value="2">
                         <label for="publi" >Publicado</label>
                     </fieldset>
+
+                    @error('status')
+                    <span class="text-danger">{{'*' . $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="form-group">
                     <label for="stract">Extracto</label>
                     <textarea class="form-control" name="stract" id="stract" cols="30" rows="10"></textarea>
+
+                    @error('stract')
+                    <span class="text-danger">{{'*' . $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="form-group editor-container editor-container_classic-editor" id="editor-container">
                     <label for="body">Cuerpo del post</label>
                     <textarea class="form-control" name="body" id="body" cols="30" rows="10"></textarea>
+
+                    @error('body')
+                    <span class="text-danger">{{'*' . $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="img">Imagen</label>
+                    <input type="file" name="image" id="img">
+
+                    @error('image')
+                    <span class="text-danger">{{'*' . $message }}</span>
+                    @enderror
                 </div>
 
                 <input type="submit" value="Crear post" class="btn btn-primary">
