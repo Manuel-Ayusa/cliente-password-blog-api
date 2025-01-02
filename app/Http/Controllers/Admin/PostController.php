@@ -63,7 +63,8 @@ class PostController extends Controller
             'name' => 'required',
             'slug' => Rule::notIn($slugs),
             'category_id' => 'required',
-            'status' => 'required|in:1,2'
+            'status' => 'required|in:1,2',
+            'image' => 'image'
         ]);
         
         if ($request->status == 2) {
@@ -71,7 +72,6 @@ class PostController extends Controller
                 'tags' => 'required',
                 'stract' => 'required',
                 'body' => 'required',
-                'image' => 'required|image'
             ]);
         }
 
