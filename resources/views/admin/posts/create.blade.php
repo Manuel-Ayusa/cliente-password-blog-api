@@ -85,14 +85,27 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <label for="img">Imagen</label>
-                    <input type="file" name="image" id="img">
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="image-wrapper">
+                        <img id="picture" src="https://www.esdesignbarcelona.com/sites/default/files/inline-images/Depositphotos_333877668_S.jpg" alt="">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="img">Imagen de post</label>
+                            <input type="file" name="image" id="img" class="form-control" accept="image/*">
+        
+                            @error('image')
+                            <span class="text-danger">{{'*' . $message }}</span>
+                            @enderror
+                        </div>
 
-                    @error('image')
-                    <span class="text-danger">{{'*' . $message }}</span>
-                    @enderror
+                        <p class="text-secondary">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Omnis explicabo rem doloribus repudiandae ut autem corrupti, nihil maiores? Assumenda sunt atque earum quas labore maiores sed expedita quasi inventore voluptatem!</p>
+                    </div>
                 </div>
+
+                
 
                 <input type="submit" value="Crear post" class="btn btn-primary">
 
@@ -103,6 +116,19 @@
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/44.1.0/ckeditor5.css" />
+    <style>
+        .image-wrapper{
+            position: relative;
+            padding-bottom: 56.25%;
+        }
+
+        .image-wrapper img{
+            position: absolute;
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 @stop
 
 @section('js')
@@ -144,5 +170,18 @@
             .then( /* ... */ )
             .catch( /* ... */ );
 
+             
+        document.getElementById("img").addEventListener('change', cambiarImagen);
+
+        function cambiarImagen(event){
+        var file = event.target.files[0];
+
+        var reader = new FileReader();
+        reader.onload = (event) => {
+            document.getElementById("picture").setAttribute('src', event.target.result);
+        };
+
+        reader.readAsDataURL(file);
+        }
     </script>
 @stop

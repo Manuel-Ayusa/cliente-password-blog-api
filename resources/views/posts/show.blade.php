@@ -15,7 +15,11 @@
             <div class="lg:col-span-2">
 
                 <figure>
-                    <img class="w-full h-80 object-cover object-center" src="http://api.codersfree.test/storage/{{$post->image->url}}" alt="{{$post->name}}">
+                    @if($post->image)
+                        <img class="w-full h-80 object-cover object-center" src="http://api.codersfree.test/storage/{{$post->image->url}}" alt="{{$post->name}}">
+                    @else 
+                        <img class="w-full h-80 object-cover object-center" src="https://www.esdesignbarcelona.com/sites/default/files/inline-images/Depositphotos_333877668_S.jpg" alt="{{$post->name}}">
+                    @endif
                 </figure>
 
                 <div class="text-base text-gray-500 mt-4">
@@ -35,8 +39,12 @@
                         @if($similar->id != $post->id)
                             <li class="mb-4">
                                 <a class="flex" href="{{route('posts.show', $similar->id)}}">
-                                    <img class="w-36 h-20 object-cover object-center" src="http://api.codersfree.test/storage/{{$similar->image->url}}" alt="{{$similar->name}}">
-
+                                    @if($similar->image)
+                                        <img class="w-36 h-20 object-cover object-center" src="http://api.codersfree.test/storage/{{$similar->image->url}}" alt="{{$similar->name}}">
+                                    @else
+                                        <img class="w-36 h-20 object-cover object-center" src="https://www.esdesignbarcelona.com/sites/default/files/inline-images/Depositphotos_333877668_S.jpg" alt="{{$similar->name}}">
+                                        
+                                    @endif
                                     <span class="ml-2 text-gray-600 ">
                                         {{$similar->name}}
                                     </span>

@@ -2,8 +2,11 @@
 
 <article class="mb-8 bg-white shadow-lg rounded-lg overflow-hidden">
 
-    <img class="w-full h-72 object-cover object-center" src="http://api.codersfree.test/storage/{{$post->image->url}}" alt="">
-    
+    @if($post->image)
+        <img class="w-full h-72 object-cover object-center" src="http://api.codersfree.test/storage/{{$post->image->url}}" alt="">
+    @else 
+        <img class="w-full h-72 object-cover object-center" src="https://www.esdesignbarcelona.com/sites/default/files/inline-images/Depositphotos_333877668_S.jpg" alt="">
+    @endif
     <div class="px-6 py-4">
         <h2 class="font-bold text-xl mb-2">
             <a href="{{route('posts.show', $post->id)}}">{{$post->name}}</a>
