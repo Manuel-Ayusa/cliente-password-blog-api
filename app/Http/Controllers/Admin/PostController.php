@@ -116,7 +116,9 @@ class PostController extends Controller
             ->post('http://api.codersfree.test/v1/posts', $request);
         }
 
-        return $response;
+        $post = json_decode($response)->data;
+
+        return redirect()->route('admin.posts.edit', $post->id)->with('info', 'El post se creo con exito.');
     }
 
     /**
@@ -133,6 +135,7 @@ class PostController extends Controller
      */
     public function edit(int $id)
     {
+        
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
@@ -229,10 +232,12 @@ class PostController extends Controller
                 'Accept' => 'application/json',
                 'Authorization' => 'Bearer ' . auth()->user()->accessToken->access_token
             ])
-            ->put('http://api.codersfree.test/v1/posts/' . $id, $request);
+            ->patch('http://api.codersfree.test/v1/posts/' . $id, $request);
         }
 
-        return $response;
+        $post = json_decode($response)->data;
+
+        return redirect()->route('admin.posts.index', $post->id)->with('ok', 'El post se actualizó con exito.');
     }
 
     /**
@@ -240,6 +245,11 @@ class PostController extends Controller
      */
     public function destroy(int $id)
     {
-        //
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . auth()->user()->accessToken->access_token
+        ])->delete('http://api.codersfree.test/v1/posts/' . $id);
+
+        return redirect()->route('admin.posts.index')->with('info', 'El post se eliminó con exito.');
     }
 }

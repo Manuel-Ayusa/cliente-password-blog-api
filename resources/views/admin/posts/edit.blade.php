@@ -7,6 +7,15 @@
 @stop
 
 @section('content')
+
+    @if (session('info'))
+            
+    <div class="alert alert-success">
+        <strong>{{session('info')}}</strong>
+    </div>
+
+    @endif
+
     <div class="card">
         <div class="card-body">
             <form action="{{route('admin.posts.update', $post->id)}}" method="POST" enctype="multipart/form-data">
@@ -73,10 +82,10 @@
                 
                     <fieldset>
                         <input type="radio" name="status" id="borrador" value="1" 
-                        @if($post->status = 1) checked @endif>
+                        @if($post->status == 'BORRADOR') checked @endif>
                         <label class="mr-3"  for="borrador">Borrador</label>
                         <input type="radio" name="status" id="publi" value="2"
-                        @if($post->status = 2) checked @endif>
+                        @if($post->status == 'PUBLICADO') checked @endif>
                         <label for="publi" >Publicado</label>
                     </fieldset>
                 
