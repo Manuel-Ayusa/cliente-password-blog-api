@@ -15,7 +15,7 @@
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
                     <input type="text" id="nombre" name="name" value="{{old('name')}}" class="form-control" placeholder="Ingrese el nombre del post">
-
+                
                     @error('name')
                     <span class="text-danger">{{'*' . $message }}</span>
                     @enderror
@@ -23,89 +23,89 @@
                     <span class="text-danger">{{'*' . $message }}</span>
                     @enderror
                 </div>
-
+                
                 <div class="form-group">
                     <label for="cat">Categoria</label>
                     <select name="category_id" id="cat" class="form-control">
                         @foreach ($categories as $category)
-                            <option value="{{$category->id}}">{{$category->name}}</option>
+                            <option value="{{$category->id}}" @if(old('category_id') == $category->id) selected @endif>{{$category->name}}</option>
                         @endforeach
                     </select>
-
+                
                     @error('category_id')
                     <span class="text-danger">{{'*' . $message }}</span>
                     @enderror
                 </div>
-
+                
                 <div class="form-group">
                     <label for="et">Etiquetas</label>
-
+                
                     <fieldset>
-                        @foreach ($tags as $tag)
-                            <input type="checkbox" name="tags[]" id="{{$tag->name}}" value="{{$tag->id}}">
+                        @foreach ($tags as $key => $tag)
+                            <input type="checkbox" name="tags[]" id="{{$tag->name}}" value="{{$tag->id}}" 
+                                    @if (old('tags')) @if(in_array($tag->id, old('tags'))) checked @endif
+                                    @endif>
                             <label class="mr-3" for="{{$tag->name}}">{{$tag->name}}</label>
                         @endforeach
                     </fieldset>
-
+                
                     @error('tags')
                     <span class="text-danger">{{'*' . $message }}</span>
                     @enderror
                 </div>
-
+                
                 <div class="form-group">
                     <label for="estado">Estado</label>
-
+                
                     <fieldset>
                         <input type="radio" name="status" id="borrador" value="1" checked>
                         <label class="mr-3"  for="borrador">Borrador</label>
-                        <input type="radio" name="status" id="publi" value="2">
+                        <input type="radio" name="status" id="publi" value="2" @if(old('status') == 2) checked @endif>
                         <label for="publi" >Publicado</label>
                     </fieldset>
-
+                
                     @error('status')
                     <span class="text-danger">{{'*' . $message }}</span>
                     @enderror
                 </div>
-
+                
                 <div class="form-group">
                     <label for="stract">Extracto</label>
-                    <textarea class="form-control" name="stract" id="stract" cols="30" rows="10"></textarea>
-
+                    <textarea class="form-control" name="stract" id="stract" cols="30" rows="10">{{old('stract')}}</textarea>
+                
                     @error('stract')
                     <span class="text-danger">{{'*' . $message }}</span>
                     @enderror
                 </div>
-
+                
                 <div class="form-group editor-container editor-container_classic-editor" id="editor-container">
                     <label for="body">Cuerpo del post</label>
-                    <textarea class="form-control" name="body" id="body" cols="30" rows="10"></textarea>
-
+                    <textarea class="form-control" name="body" id="body" cols="30" rows="10">{{old('body')}}</textarea>
+                
                     @error('body')
                     <span class="text-danger">{{'*' . $message }}</span>
                     @enderror
                 </div>
-
+                
                 <div class="row mb-3">
                     <div class="col">
                         <div class="image-wrapper">
-                        <img id="picture" src="https://www.esdesignbarcelona.com/sites/default/files/inline-images/Depositphotos_333877668_S.jpg" alt="">
+                        <img id="picture" src="https://www.esdesignbarcelona.com/sites/default/files/inline-images/Depositphotos_333877668_S.jpg" alt="imagen por defecto">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label for="img">Imagen de post</label>
                             <input type="file" name="image" id="img" class="form-control" accept="image/*">
-        
+                
                             @error('image')
                             <span class="text-danger">{{'*' . $message }}</span>
                             @enderror
                         </div>
-
+                
                         <p class="text-secondary">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Omnis explicabo rem doloribus repudiandae ut autem corrupti, nihil maiores? Assumenda sunt atque earum quas labore maiores sed expedita quasi inventore voluptatem!</p>
                     </div>
-                </div>
-
-                
+                </div>   
 
                 <input type="submit" value="Crear post" class="btn btn-primary">
 

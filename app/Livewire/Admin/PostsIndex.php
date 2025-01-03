@@ -23,7 +23,7 @@ class PostsIndex extends Component
         $userId = auth()->user()->id;
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . config('services.codersfree.access_token_read_post')
+            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
         ])->get('http://api.codersfree.test/v1/posts?filter[user_id]=' . $userId . '&&filter[name]=' . $this->search . '&&included=images,tags,user&&sort=-id'); 
 
         $response = json_decode($response);

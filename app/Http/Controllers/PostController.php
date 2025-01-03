@@ -14,7 +14,7 @@ class PostController extends Controller
     {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . config('services.codersfree.access_token_read_post')
+            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
         ])->get('http://api.codersfree.test/v1/posts?filter[status]=2&&included=image,tags&&sort=-id'); 
 
         
@@ -25,31 +25,12 @@ class PostController extends Controller
         return view('posts.index', compact('posts'));
     }
 
-    //
-    public function store()
-    {
-        $this->resolveAuthorization(); //resuelve si el access_token expiro, si es asi se asigna uno nuevo usando el refresh_token
-
-        $response = Http::withHeaders([
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . auth()->user()->accessToken->access_token
-        ])->post('http://api.codersfree.test/v1/posts', [
-            'name' => 'Este es un nombre de prueba 2',
-            'slug' => 'Este-es-un-nombre-de-prueba2',
-            'stract' => 'sasddsad',
-            'body' => 'ssdwdwasddsad',
-            'category_id' => 1,
-        ]);
-
-        return $response->json();
-    }
-
     //  
     public function show(int $post)
     {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . config('services.codersfree.access_token_read_post')
+            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
         ])->get('http://api.codersfree.test/v1/posts/' . $post . '?included=image,category');
 
         $post = json_decode($response)->data;
