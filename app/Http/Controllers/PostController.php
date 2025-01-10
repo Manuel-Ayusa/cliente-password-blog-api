@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Traits\Paginate;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PostController extends Controller
 {
-    use Paginate;
+    use Paginate, AuthorizesRequests;
     //
     public function index()
     {
@@ -33,7 +34,12 @@ class PostController extends Controller
             'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
         ])->get('http://api.codersfree.test/v1/posts/' . $post . '?included=image,category');
 
+
         $post = json_decode($response)->data;
+
+        if ($post->status != 'PUBLICADO') {
+            return abort(403, 'Acción no autorizada.'); 
+        }
 
         $category_id = $post->category_id;
 
