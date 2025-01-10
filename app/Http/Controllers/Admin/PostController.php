@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use App\Http\Requests\StorePostRequest;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
@@ -116,9 +115,12 @@ class PostController extends Controller
             ->post('http://api.codersfree.test/v1/posts', $request);
         }
 
-        $post = json_decode($response)->data;
-
-        return redirect()->route('admin.posts.edit', $post->id)->with('info', 'El post se creo con exito.');
+        if ($response->status() == 200) {
+            $post = json_decode($response)->data;
+            return redirect()->route('admin.posts.edit', $post->id)->with('info', 'El post se creo con exito.');
+        } else {
+            return redirect()->route('admin.posts.index')->with('info', 'Ocurrio un error al intentar crear el post.');
+        }
     }
 
     /**
@@ -135,13 +137,16 @@ class PostController extends Controller
      */
     public function edit(int $id)
     {
-        
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
-        ])->get('http://api.codersfree.test/v1/posts/' . $id . '?included=tags,image');
+        ])->get('http://api.codersfree.test/v1/posts/' . $id . '?included=tags,image,user');
 
         $post = json_decode($response)->data;
+
+        if ($post->user_id != auth()->user()->id) {
+            return abort(403, 'Acción no autorizada.');
+        }
 
         $response = Http::withHeaders([
             'Accept' => 'application/json',
@@ -235,9 +240,12 @@ class PostController extends Controller
             ->patch('http://api.codersfree.test/v1/posts/' . $id, $request);
         }
 
-        $post = json_decode($response)->data;
-
-        return redirect()->route('admin.posts.index', $post->id)->with('ok', 'El post se actualizó con exito.');
+        if ($response->status() == 200) {
+            $post = json_decode($response)->data;
+            return redirect()->route('admin.posts.index', $post->id)->with('ok', 'El post se actualizó con exito.');
+        } else {
+            return redirect()->route('admin.posts.index')->with('info', 'Ocurrio un error al intentar actualizar el post.');
+        }
     }
 
     /**
@@ -249,7 +257,13 @@ class PostController extends Controller
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . auth()->user()->accessToken->access_token
         ])->delete('http://api.codersfree.test/v1/posts/' . $id);
+        
 
-        return redirect()->route('admin.posts.index')->with('info', 'El post se eliminó con exito.');
+        if ($response->status() == 200) {
+            return redirect()->route('admin.posts.index')->with('info', 'El post se eliminó con exito.');    
+        } else {
+            return redirect()->route('admin.posts.index')->with('info', 'Ocurrio un error al intentar eliminar el post.');
+        }
+        
     }
 }
