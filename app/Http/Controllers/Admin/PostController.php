@@ -115,7 +115,7 @@ class PostController extends Controller
             ->post('http://api.codersfree.test/v1/posts', $request);
         }
 
-        if ($response->status() == 200) {
+        if ($response->status() == 201) {
             $post = json_decode($response)->data;
             return redirect()->route('admin.posts.edit', $post->id)->with('info', 'El post se creo con exito.');
         } else {
