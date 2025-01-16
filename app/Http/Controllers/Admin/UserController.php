@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -14,52 +17,36 @@ class UserController extends Controller
     {
         return view('admin.users.index');
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
+ 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        $roles = Role::all();
+
+        $rolesUser = $user->roles;
+
+        return view('admin.users.edit', compact('user', 'roles', 'rolesUser'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    public function update(Request $request, User $user)
+    {  
+        $user->roles()->sync($request->roles);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . auth()->user()->accessToken->access_token
+        ])->put('http://api.codersfree.test/v1/users/' . $user->id, $request->all());
+
+        
+        if ($response->status() == 200) {
+            return redirect()->route('admin.users.edit', $user->id)->with('info', 'Se asignaron los roles correctamente.');    
+        } else {
+            return redirect()->route('admin.users.edit', $user->id)->with('info', 'Algo falló.');    
+        }
     }
 }
