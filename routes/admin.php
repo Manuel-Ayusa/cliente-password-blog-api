@@ -15,4 +15,4 @@ Route::resource('tags', TagController::class)->names('admin.tags');
 
 Route::resource('posts', PostController::class)->names('admin.posts');
 
-Route::resource('users', UserController::class)->names('admin.users');
+Route::resource('users', UserController::class)->only(['index', 'edit', 'update'])->names('admin.users');
