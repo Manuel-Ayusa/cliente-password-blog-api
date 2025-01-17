@@ -329,8 +329,13 @@ return [
         [
             'text' => 'Usuarios',
             'route' => 'admin.users.index',
-            'icon' => 'fa-solid fa-fw fa-users',
+            'icon' => 'fa-solid fa-users fa-fw',
             'can' => 'admin.users.index'
+        ],
+        [
+            'text' => 'Lista de roles',
+            'route' => 'admin.roles.index',
+            'icon' => 'fa-solid fa-fw fa-users-cog',
         ],
         [
             'text' => 'Categorias',
