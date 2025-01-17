@@ -18,10 +18,12 @@
 
     <div class="card">
 
-        <div class="card-header">
-            <a href="{{route('admin.categories.create')}}" class="btn btn-info">Agregar categoria</a>
-        </div>
-
+        @can('admin.categories.create')
+            <div class="card-header">
+                <a href="{{route('admin.categories.create')}}" class="btn btn-info">Agregar categoria</a>
+            </div>    
+        @endcan
+        
         <div class="card-body">
             <table class="table table-striped">
                 <thead>
@@ -37,16 +39,20 @@
                             <td>{{$category->id}}</td>
                             <td>{{$category->name}}</td>
                             <td width="10px">
-                                <a href="{{route('admin.categories.edit', $category->id)}}" class="btn btn-primary btn-sm">Editar</a>
-                            </td>
+                                @can('admin.categories.edit')
+                                    <a href="{{route('admin.categories.edit', $category->id)}}" class="btn btn-primary btn-sm">Editar</a>
+                                @endcan
+                            </td>                                                     
                             <td width="10px">
-                                <form action="{{route('admin.categories.destroy', $category->id)}}" method="POST">
-                                    @csrf
-                                    @method('delete')
+                                @can('admin.categories.destroy')
+                                    <form action="{{route('admin.categories.destroy', $category->id)}}" method="POST">
+                                        @csrf
+                                        @method('delete')
 
-                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                                </form>
-                            </td>
+                                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                    </form>
+                                @endcan
+                            </td>                  
                         </tr>    
                     @endforeach
                     
