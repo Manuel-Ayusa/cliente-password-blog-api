@@ -7,9 +7,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class CategoryController extends Controller
+class CategoryController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('admin.categories.index') ,only: ['index', 'show']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('admin.categories.create'), only:['store', 'create']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('admin.categories.edit'), only:['update', 'edit']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('admin.categories.destroy'), only:['destroy']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */

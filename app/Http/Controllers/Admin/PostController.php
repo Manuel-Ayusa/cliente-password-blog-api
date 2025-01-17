@@ -7,9 +7,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class PostController extends Controller
+class PostController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('admin.posts.index') ,only: ['index', 'show']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('admin.posts.create'), only:['store', 'create']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('admin.posts.edit'), only:['update', 'edit']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('admin.posts.destroy'), only:['destroy']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */

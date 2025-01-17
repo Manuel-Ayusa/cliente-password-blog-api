@@ -7,9 +7,19 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Spatie\Permission\Models\Role;
-
-class UserController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+ 
+class UserController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('admin.users.index') ,only: ['index']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('admin.users.edit'), only:['update', 'edit'])
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */

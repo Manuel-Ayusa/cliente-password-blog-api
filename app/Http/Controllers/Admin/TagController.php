@@ -7,9 +7,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class TagController extends Controller
+class TagController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('admin.tags.index') ,only: ['index', 'show']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('admin.tags.create'), only:['store', 'create']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('admin.tags.edit'), only:['update', 'edit']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('admin.tags.destroy'), only:['destroy']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
