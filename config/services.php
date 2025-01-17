@@ -38,7 +38,7 @@ return [
     'blog-api' => [
         'client_id' => env('BLOG_API_CLIENT_ID'),
         'client_secret' => env('BLOG_API_CLIENT_SECRET'),
-        'access_token_read_post' => env('BLOG_API_ACCESS_TOKEN_READ_POST') 
+        'access_token_read_resources' => env('BLOG_API_ACCESS_TOKEN_READ_RESOURCES') 
     ]
 
 ];

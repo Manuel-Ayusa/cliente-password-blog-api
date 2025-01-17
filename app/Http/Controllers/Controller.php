@@ -17,7 +17,7 @@ abstract class Controller
                 'refresh_token' => auth()->user()->accessToken->refresh_token,
                 'client_id' => config('services.blog-api.client_id'),
                 'client_secret' => config('services.blog-api.client_secret'),
-                'scope' => 'create-post read-post update-post delete-post create-category read-category update-category delete-category'
+                'scope' => 'create-post read-post update-post delete-post create-category read-category update-category delete-category create-tag read-tag update-tag delete-tag'
             ]);
     
             $access_token = $response->json();

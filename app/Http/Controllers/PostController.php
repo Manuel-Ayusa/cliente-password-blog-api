@@ -15,7 +15,7 @@ class PostController extends Controller
     {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
+            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_resources')
         ])->get('http://api.codersfree.test/v1/posts?filter[status]=2&&included=image,tags&&sort=-id'); 
 
         
@@ -31,7 +31,7 @@ class PostController extends Controller
     {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
+            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_resources')
         ])->get('http://api.codersfree.test/v1/posts/' . $post . '?included=image,category');
 
 
@@ -45,7 +45,7 @@ class PostController extends Controller
 
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
+            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_resources')
         ])->get('http://api.codersfree.test/v1/posts?filter[category_id]=' . $category_id . '&&filter[status]=2&&sort=-id&&perPage=4&&included=image');
 
         $similares = json_decode($response)->data;
@@ -58,7 +58,7 @@ class PostController extends Controller
     {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
+            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_resources')
         ])->get('http://api.codersfree.test/v1/categories/' . $category . '?included=posts.image,posts.tags');
 
         $category = json_decode($response)->data;
@@ -75,7 +75,7 @@ class PostController extends Controller
     {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
+            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_resources')
         ])->get('http://api.codersfree.test/v1/tags/' . $tag . '?included=posts.image,posts.tags');
 
         $response = json_decode($response);

@@ -17,7 +17,7 @@ class TagController extends Controller
     {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' .  config('services.codersfree.access_token_read_post')
+            'Authorization' => 'Bearer ' .  config('services.blog-api.access_token_read_resources')
         ])->get('http://api.codersfree.test/v1/tags');
 
         $tags = json_decode($response)->data;
@@ -40,7 +40,7 @@ class TagController extends Controller
     {   
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' .  config('services.codersfree.access_token_read_post')
+            'Authorization' => 'Bearer ' .  config('services.blog-api.access_token_read_resources')
         ])->get('http://api.codersfree.test/v1/tags');
 
         $tags = json_decode($response)->data;
@@ -99,7 +99,7 @@ class TagController extends Controller
     {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' .  config('services.codersfree.access_token_read_post')
+            'Authorization' => 'Bearer ' .  config('services.blog-api.access_token_read_resources')
         ])->get('http://api.codersfree.test/v1/tags');
 
         $tags = json_decode($response)->data;

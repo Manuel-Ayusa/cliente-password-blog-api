@@ -17,7 +17,7 @@ class CategoryController extends Controller
     {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' .  config('services.codersfree.access_token_read_post')
+            'Authorization' => 'Bearer ' .  config('services.codersfree.access_token_read_resources')
         ])->get('http://api.codersfree.test/v1/categories');
 
         $categories = json_decode($response)->data;
@@ -39,7 +39,7 @@ class CategoryController extends Controller
     {   
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' .  config('services.codersfree.access_token_read_post')
+            'Authorization' => 'Bearer ' .  config('services.codersfree.access_token_read_resources')
         ])->get('http://api.codersfree.test/v1/categories');
 
         $categories = json_decode($response)->data;
@@ -97,7 +97,7 @@ class CategoryController extends Controller
     {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' .  config('services.codersfree.access_token_read_post')
+            'Authorization' => 'Bearer ' .  config('services.codersfree.access_token_read_resources')
         ])->get('http://api.codersfree.test/v1/categories');
 
         $categories = json_decode($response)->data;

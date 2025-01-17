@@ -25,14 +25,14 @@ class PostController extends Controller
     {   
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
+            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_resources')
         ])->get('http://api.codersfree.test/v1/categories');
 
         $categories = json_decode($response)->data;
 
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
+            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_resources')
         ])->get('http://api.codersfree.test/v1/tags');
 
         $tags = json_decode($response)->data;
@@ -47,7 +47,7 @@ class PostController extends Controller
     {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' .  config('services.blog-api.access_token_read_post')
+            'Authorization' => 'Bearer ' .  config('services.blog-api.access_token_read_resources')
         ])->get('http://api.codersfree.test/v1/posts');
 
         $posts = json_decode($response)->data;
@@ -139,7 +139,7 @@ class PostController extends Controller
     {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
+            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_resources')
         ])->get('http://api.codersfree.test/v1/posts/' . $id . '?included=tags,image,user');
 
         $post = json_decode($response)->data;
@@ -150,14 +150,14 @@ class PostController extends Controller
 
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
+            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_resources')
         ])->get('http://api.codersfree.test/v1/categories');
 
         $categories = json_decode($response)->data;
 
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_post')
+            'Authorization' => 'Bearer ' . config('services.blog-api.access_token_read_resources')
         ])->get('http://api.codersfree.test/v1/tags');
 
         $tags = json_decode($response)->data;
@@ -172,7 +172,7 @@ class PostController extends Controller
     {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' .  config('services.blog-api.access_token_read_post')
+            'Authorization' => 'Bearer ' .  config('services.blog-api.access_token_read_resources')
         ])->get('http://api.codersfree.test/v1/posts');
 
         $posts = json_decode($response)->data;

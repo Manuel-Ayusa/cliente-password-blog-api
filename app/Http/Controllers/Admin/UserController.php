@@ -35,15 +35,13 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {  
-        $user->roles()->sync($request->roles);
-
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . auth()->user()->accessToken->access_token
         ])->put('http://api.codersfree.test/v1/users/' . $user->id, $request->all());
-
         
         if ($response->status() == 200) {
+            $user->roles()->sync($request->roles);
             return redirect()->route('admin.users.edit', $user->id)->with('info', 'Se asignaron los roles correctamente.');    
         } else {
             return redirect()->route('admin.users.edit', $user->id)->with('info', 'Algo falló.');    
