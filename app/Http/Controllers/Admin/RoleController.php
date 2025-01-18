@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Spatie\Permission\Models\Permission;
 //use Spatie\Permission\Contracts\Role;
 use Spatie\Permission\Models\Role;
@@ -39,10 +40,30 @@ class RoleController extends Controller
             'name' => 'required|unique:roles,name',
         ]);
 
-        $role = Role::create($request->all());
-        $role->permissions()->sync($request->permissions);
+        $permissions = $request->permissions;
+        $permissionsRequest = [];
 
-        return redirect()->route('admin.roles.edit', $role)->with('info', 'El rol se creo con exito.');
+        foreach ($request->permissions as $permission) {
+            $add = Permission::where('id', $permission)->pluck('name')->first();
+
+            array_push($permissionsRequest, $add);
+        }
+
+        $request['permissions'] = $permissionsRequest;
+
+        $response = Http::withHeaders([
+            'Accept' => 'aplication/json',
+            'Autorization' => 'Bearer' . auth()->user()->accessToken->access_token
+        ])->post('http://api.codersfree.test/v1/roles', $request);
+
+        if ($response->status() == 201) {
+            $role = Role::create($request->all());
+            $role->permissions()->sync($permissions);
+
+            return redirect()->route('admin.roles.edit', $role)->with('info', 'El rol se creo con exito.');       
+        } else {
+            return redirect()->route('admin.roles.create')->with('info', 'Ocurrio un error al crear el rol.');
+        }
     }
 
     /**
@@ -73,10 +94,30 @@ class RoleController extends Controller
             'name' => 'required|unique:roles,name,' . $role->id,
         ]);
 
-        $role->update($request->all());
-        $role->permissions()->sync($request->permissions);
+        $permissions = $request->permissions;
+        $permissionsRequest = [];
 
-        return redirect()->route('admin.roles.edit', $role)->with('info', 'El rol se actualizó con exito.');
+        foreach ($request->permissions as $permission) {
+            $add = Permission::where('id', $permission)->pluck('name')->first();
+
+            array_push($permissionsRequest, $add);
+        }
+
+        $request['permissions'] = $permissionsRequest;
+
+        $response = Http::withHeaders([
+            'Accept' => 'aplication/json',
+            'Autorization' => 'Bearer' . auth()->user()->accessToken->access_token
+        ])->put('http://api.codersfree.test/v1/roles', $request);
+
+        if ($response->status() == 200) {
+            $role->update($request->all());
+            $role->permissions()->sync($permissions);
+
+            return redirect()->route('admin.roles.edit', $role)->with('info', 'El rol se actualizó con exito.');       
+        } else {
+            return redirect()->route('admin.roles.create')->with('info', 'Ocurrio un error al actualizar el rol.');
+        }
     }
 
     /**
@@ -84,6 +125,17 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
+        $response = Http::withHeaders([
+            'Accept' => 'aplication/json',
+            'Autorization' => 'Bearer' . auth()->user()->accessToken->access_token
+        ])->delete('http://api.codersfree.test/v1/roles', $role);
 
+        if ($response->status() == 200) {
+            $role->delete();
+
+            return redirect()->route('admin.roles.index', $role)->with('info', 'El rol se eliminó con exito.');       
+        } else {
+            return redirect()->route('admin.roles.edit')->with('info', 'Ocurrio un error al eliminar el rol.');
+        }
     }
 }
