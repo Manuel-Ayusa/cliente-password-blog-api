@@ -7,6 +7,15 @@
 @stop
 
 @section('content')
+
+    @if (session('info'))
+                        
+        <div class="alert alert-danger">
+            <strong>{{session('info')}}</strong>
+        </div>
+
+    @endif
+
     <div class="card">
         <div class="card-body">
 
