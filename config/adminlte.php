@@ -197,7 +197,7 @@ return [
     'classes_content_header' => '',
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-dark-primary elevation-4',
-    'classes_sidebar_nav' => '',
+    'classes_sidebar_nav' => 'nav-child-indent',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
@@ -328,26 +328,73 @@ return [
         ],
         [
             'text' => 'Usuarios',
-            'route' => 'admin.users.index',
             'icon' => 'fa-solid fa-users fa-fw',
-            'can' => 'admin.users.index'
+            'can' => 'admin.users.index',
+            'submenu' => [
+                [
+                    'text' => 'Lista de usuarios',
+                    'route' => 'admin.users.index',
+                    'icon' => 'fa-solid fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Asignar rol a usuario',
+                    'route' => 'admin.users.create',
+                    'icon' => 'fa-solid fa-fw fa-plus',
+                    'can' => 'admin.users.update',
+                ]
+            ],
         ],
         [
-            'text' => 'Lista de roles',
-            'route' => 'admin.roles.index',
+            'text' => 'Roles',
             'icon' => 'fa-solid fa-fw fa-users-cog',
+            'submenu' => [
+                [
+                    'text' => 'Lista de roles',
+                    'route' => 'admin.roles.index',
+                    'icon' => 'fa-solid fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Agregar nuevo rol',
+                    'route' => 'admin.roles.create',
+                    'icon' => 'fa-solid fa-fw fa-plus',
+                ]
+            ],
         ],
         [
             'text' => 'Categorias',
-            'route' => 'admin.categories.index',
             'icon' => 'fa-brands fa-fw fa-buffer',
-            'can' => 'admin.categories.index'
+            'can' => 'admin.categories.index',
+            'submenu' => [
+                [
+                    'text' => 'Lista de categorias',
+                    'route' => 'admin.categories.index',
+                    'icon' => 'fa-solid fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Agregar nueva categoria',
+                    'route' => 'admin.categories.create',
+                    'icon' => 'fa-solid fa-fw fa-plus',
+                    'can' => 'admin.categories.create',
+                ]
+            ],
         ],
         [
             'text' => 'Etiquetas',
-            'route' => 'admin.tags.index',
             'icon' => 'fa-solid fa-fw fa-tag',
-            'can' => 'admin.tags.index'
+            'can' => 'admin.tags.index',
+            'submenu' => [
+                [
+                    'text' => 'Lista de etiquetas',
+                    'route' => 'admin.tags.index',
+                    'icon' => 'fa-solid fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Agregar nueva etiqueta',
+                    'route' => 'admin.tags.create',
+                    'icon' => 'fa-solid fa-fw fa-plus',
+                    'can' => 'admin.categories.create',
+                ]
+            ],
         ],
         ['header' => 'OPCIONES DE BLOG'],
         [
