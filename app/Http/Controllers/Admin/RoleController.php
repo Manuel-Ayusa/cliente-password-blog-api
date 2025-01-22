@@ -6,11 +6,22 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Spatie\Permission\Models\Permission;
-//use Spatie\Permission\Contracts\Role;
 use Spatie\Permission\Models\Role;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class RoleController extends Controller
+class RoleController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('admin.roles.index') ,only: ['index', 'show']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('admin.roles.create'), only:['store', 'create']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('admin.roles.edit'), only:['update', 'edit']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('admin.roles.destroy'), only:['destroy']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
