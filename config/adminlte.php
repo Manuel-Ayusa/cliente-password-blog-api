@@ -340,13 +340,14 @@ return [
                     'text' => 'Asignar rol a usuario',
                     'route' => 'admin.users.create',
                     'icon' => 'fa-solid fa-fw fa-plus',
-                    'can' => 'admin.users.update',
+                    'can' => 'admin.users.edit',
                 ]
             ],
         ],
         [
             'text' => 'Roles',
             'icon' => 'fa-solid fa-fw fa-users-cog',
+            'can' => 'admin.roles.index',
             'submenu' => [
                 [
                     'text' => 'Lista de roles',
@@ -357,6 +358,7 @@ return [
                     'text' => 'Agregar nuevo rol',
                     'route' => 'admin.roles.create',
                     'icon' => 'fa-solid fa-fw fa-plus',
+                    'can' => 'admin.roles.create',
                 ]
             ],
         ],
