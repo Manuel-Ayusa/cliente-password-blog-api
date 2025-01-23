@@ -63,12 +63,12 @@ return [
     |
     */
 
-    'logo' => '<b>API</b> Blog',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>BLOGFLOW</b>',
+    'logo_img' => 'https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Admin Logo',
+    'logo_img_alt' => 'Blogflow',
 
     /*
     |--------------------------------------------------------------------------
@@ -113,7 +113,7 @@ return [
         'enabled' => true,
         'mode' => 'fullscreen',
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
             'width' => 60,
@@ -196,7 +196,7 @@ return [
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
+    'classes_sidebar' => 'sidebar-dark-info elevation-4',
     'classes_sidebar_nav' => 'nav-child-indent',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
@@ -329,20 +329,8 @@ return [
         [
             'text' => 'Usuarios',
             'icon' => 'fa-solid fa-users fa-fw',
+            'route' => 'admin.users.index',
             'can' => 'admin.users.index',
-            'submenu' => [
-                [
-                    'text' => 'Lista de usuarios',
-                    'route' => 'admin.users.index',
-                    'icon' => 'fa-solid fa-fw fa-list',
-                ],
-                [
-                    'text' => 'Asignar rol a usuario',
-                    'route' => 'admin.users.create',
-                    'icon' => 'fa-solid fa-fw fa-plus',
-                    'can' => 'admin.users.edit',
-                ]
-            ],
         ],
         [
             'text' => 'Roles',
@@ -394,7 +382,7 @@ return [
                     'text' => 'Agregar nueva etiqueta',
                     'route' => 'admin.tags.create',
                     'icon' => 'fa-solid fa-fw fa-plus',
-                    'can' => 'admin.categories.create',
+                    'can' => 'admin.tags.create',
                 ]
             ],
         ],

@@ -1,4 +1,5 @@
 <x-guest-layout>
+    <p class="pb-3 text-xl text-gray-700">Register</p>
     <form method="POST" action="{{ route('register') }}">
         @csrf
 

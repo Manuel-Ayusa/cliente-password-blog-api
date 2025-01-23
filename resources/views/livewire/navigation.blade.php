@@ -1,4 +1,4 @@
-<nav class="bg-gray-800" x-data="{ open: false }">
+<nav class="bg-orange-600 shadow-xl" x-data="{ open: false }">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
       <div class="relative flex h-16 items-center justify-between">
         <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -28,6 +28,7 @@
         <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
           <a href="/" class="flex shrink-0 items-center">
             <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500" alt="Company">
+            <p class="ml-2 text-white text-3xl font-bold max-sm:hidden">Blogflow</p>
           </a>
 
           {{-- menu lg --}}
@@ -36,13 +37,13 @@
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
               {{-- <a href="#" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">Dashboard</a> --}}
               @foreach ($categories as $category)
-                <a href="{{route('posts.category', $category->id)}}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{{$category->name}}</a>
+                <a href="{{route('posts.category', $category->id)}}" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-orange-600 hover:text-gray-300">{{$category->name}}</a>
               @endforeach
             </div>
           </div>
         </div>
         <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-          <button type="button" class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+          <button type="button" class="relative rounded-full bg-orange-00 p-1 text-white hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
             <span class="absolute -inset-1.5"></span>
             <span class="sr-only">View notifications</span>
             <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
@@ -94,8 +95,8 @@
           @else
             
             <div>
-              <a href="{{route('login')}}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Login</a>
-              <a href="{{route('register')}}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Register</a>
+              <a href="{{route('login')}}" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-orange-600 hover:text-gray-300">Login</a>
+              <a href="{{route('register')}}" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-orange-600 hover:text-gray-300">Register</a>
             </div>
 
           @endauth
@@ -111,7 +112,7 @@
         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
         {{-- <a href="#" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white" aria-current="page">Dashboard</a> --}}
         @foreach ($categories as $category)
-        <a href="{{route('posts.category', $category->id)}}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{{$category->name}}</a>
+        <a href="{{route('posts.category', $category->id)}}" class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-orange-600 hover:text-gray-300">{{$category->name}}</a>
         @endforeach
        
       </div>

@@ -11,11 +11,11 @@
 
                         <div>
                             @foreach ($post->tags as $tag)
-                                <a href="{{route('posts.tag', $tag->id)}}" class="inline-block px-3 h-6 bg-{{$tag->color}}-600 rounded-full">{{$tag->name}}</a>
+                                <a href="{{route('posts.tag', $tag->id)}}" class="inline-block px-3 h-6 bg-{{$tag->color}}-600 rounded-full text-white">{{$tag->name}}</a>
                             @endforeach
                         </div>
 
-                        <h2 class="text-4xl text-white leading-8 font-bold mt-2">
+                        <h2 class="text-4xl text-white leading-8 font-bold mt-2 text-shadow" style="text-shadow: 2px 2px 2px black;">
                             <a href="{{route('posts.show', $post->id)}}">
                                 {{$post->name}}
                             </a>

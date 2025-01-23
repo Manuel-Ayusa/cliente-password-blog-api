@@ -11,8 +11,8 @@
             </ul>
         </div>
     @endif
-
-
+    
+    <p class="pb-3 text-xl text-gray-700">Log in</p>
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
