@@ -29,7 +29,7 @@ class CategoryController extends Controller implements HasMiddleware
     {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' .  config('services.codersfree.access_token_read_resources')
+            'Authorization' => 'Bearer ' .  config('services.blog-api.access_token_read_resources')
         ])->get('http://api.codersfree.test/v1/categories');
 
         $categories = json_decode($response)->data;
@@ -109,7 +109,7 @@ class CategoryController extends Controller implements HasMiddleware
     {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' .  config('services.codersfree.access_token_read_resources')
+            'Authorization' => 'Bearer ' .  config('services.blog-api.access_token_read_resources')
         ])->get('http://api.codersfree.test/v1/categories');
 
         $categories = json_decode($response)->data;
