@@ -10,12 +10,12 @@ La aplicación está diseñada para proporcionar una interfaz de usuario para in
 <b>User</b>: Solo tiene acceso a leer y ver las publicaciones sin capacidad de modificación.
 
 ## Autenticación
-La autenticación se maneja con JWT (JSON Web Tokens). Los usuarios deben iniciar sesión para obtener un token, que luego debe ser enviado en el encabezado de las solicitudes API para realizar las operaciones protegidas (CRUD).
+La autenticación se maneja con JWT (JSON Web Tokens). Los usuarios deben iniciar sesión para obtener un token, que luego es enviado en el encabezado de las solicitudes API para realizar las operaciones protegidas (CRUD).
 
 ## Tecnologías Utilizadas
 <b>Frontend</b>: HTML, CSS, JavaScript, Tailwind CSS, Bootstrap 5. <br>
 <b>Backend/API</b>: API RESTful para gestionar posts, roles de usuario y las demas entidades. <br>
-<b>Autenticación</b>: JWT (JSON Web Tokens) para gestionar el inicio de sesión y la autorización. <br>
+<b>Autenticación</b>: JWT para gestionar el inicio de sesión y la autorización. <br>
 
 ## Autor
 Manuel Alejandro Ayusa - Programador y Desarrollador web <br>
