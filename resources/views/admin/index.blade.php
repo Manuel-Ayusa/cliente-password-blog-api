@@ -77,7 +77,7 @@
                         <p>Roles</p>
                     </div>
                     <div class="icon">
-                        <i class="fa-brands fa-buffer"></i>
+                        <i class="fa-solid fa-users-cog"></i>
                     </div>
                         <a href="{{route('admin.roles.index')}}" class="small-box-footer">
                         Mas información <i class="fas fa-arrow-circle-right"></i>
