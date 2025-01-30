@@ -1,4 +1,4 @@
-<nav class="bg-orange-600 shadow-xl" x-data="{ open: false }">
+<nav class="bg-purple-700 shadow-xl" x-data="{ open: false }">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
       <div class="relative flex h-16 items-center justify-between">
         <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -37,7 +37,7 @@
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
               {{-- <a href="#" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">Dashboard</a> --}}
               @foreach ($categories as $category)
-                <a href="{{route('posts.category', $category->id)}}" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-orange-600 hover:text-gray-300">{{$category->name}}</a>
+                <a href="{{route('posts.category', $category->id)}}" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-purple-600 hover:text-gray-300">{{$category->name}}</a>
               @endforeach
             </div>
           </div>
@@ -112,7 +112,7 @@
         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
         {{-- <a href="#" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white" aria-current="page">Dashboard</a> --}}
         @foreach ($categories as $category)
-        <a href="{{route('posts.category', $category->id)}}" class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-orange-600 hover:text-gray-300">{{$category->name}}</a>
+        <a href="{{route('posts.category', $category->id)}}" class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-purple-600 hover:text-gray-300">{{$category->name}}</a>
         @endforeach
        
       </div>
