@@ -26,8 +26,6 @@
 
     @endif
 
-
-
     @livewire('admin.posts-index')
 @stop
 
