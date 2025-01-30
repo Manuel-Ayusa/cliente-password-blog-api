@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'use_ico_only' => false,
+    'use_ico_only' => true,
     'use_full_favicon' => false,
 
     /*
@@ -64,7 +64,7 @@ return [
     */
 
     'logo' => '<b>BLOGFLOW</b>',
-    'logo_img' => 'https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500',
+    'logo_img' => 'https://tailwindui.com/plus/img/logos/mark.svg?color=purple&shade=500',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
